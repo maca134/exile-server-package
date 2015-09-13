@@ -39,7 +39,8 @@ try
 catch
 {
 	"MySQL connection error!" call ExileServer_util_log;
-	format ["MySQL Error: %1",_exception]  call ExileServer_util_log;
+	"Please have a look at @ExileServer/extDB/logs/ to find out what went wrong." call ExileServer_util_log;
+	format ["MySQL Error: %1", _exception]  call ExileServer_util_log;
 	"Server will shutdown now :(" call ExileServer_util_log;
 	"extDB2" callExtension "9:SHUTDOWN";
 };

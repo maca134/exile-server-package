@@ -42,7 +42,7 @@ try
 		};
 		_playerPopTabs = _playerPopTabs - _totalPopTabAmount;
 		_playerObject setVariable ["ExileMoney", _playerPopTabs];
-		format["setAccountMoney:%1:%2", _playerRespect, getPlayerUID _playerObject] call ExileServer_system_database_query_fireAndForget;
+		format["setAccountMoney:%1:%2", _playerPopTabs, getPlayerUID _playerObject] call ExileServer_system_database_query_fireAndForget;
 	}
 	else 
 	{

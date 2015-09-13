@@ -7,14 +7,13 @@
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/.
  */
  
-private["_numberOfVehiclesToSpawn","_mapSize","_numberOfChunks","_chunksOnXAxis","_chunksOnYAxis","_chunkSizeX","_chunkSizeY","_chunkPositions","_y"];
+private["_numberOfVehiclesToSpawn","_numberOfChunks","_chunksOnXAxis","_chunksOnYAxis","_chunkSizeX","_chunkSizeY","_chunkPositions","_y"];
 _numberOfVehiclesToSpawn = _this;
-_mapSize = getNumber (configFile >> "CfgWorlds" >> worldName >> "mapSize");
 _numberOfChunks = _numberOfVehiclesToSpawn ;
 _chunksOnXAxis = floor (sqrt _numberOfChunks);
 _chunksOnYAxis = floor(_numberOfChunks / _chunksOnXAxis);
-_chunkSizeX = floor (_mapSize / _chunksOnXAxis);
-_chunkSizeY = floor (_mapSize / _chunksOnYAxis);
+_chunkSizeX = floor (worldSize / _chunksOnXAxis);
+_chunkSizeY = floor (worldSize / _chunksOnYAxis);
 _chunkPositions = [];
 for "_x" from 0 to _chunksOnXAxis - 1 do 
 {

@@ -23,8 +23,4 @@ if !(_uid in ["", "__SERVER__", "__HEADLESS__"]) then
 		format["createAccount:%1:%2", _uid, _name] call ExileServer_system_database_query_fireAndForget;
 	};
 };
-{
-	_x enableSimulationGlobal false;
-}
-forEach allMissionObjects "Exile_Unit_GhostPlayer";
 true

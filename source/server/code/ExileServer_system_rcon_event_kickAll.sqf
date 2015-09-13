@@ -8,8 +8,8 @@
  */
  
 private["_i"];
-for "_i" from 0 to 99 do 
+for "_i" from 0 to ((playableSlotsNumber independent) - 1) do 
 {
-	format ["#kick %1",_i] call ExileServer_system_rcon_event_sendCommand;
+	format ["#kick %1", _i] call ExileServer_system_rcon_event_sendCommand;
 };
 true

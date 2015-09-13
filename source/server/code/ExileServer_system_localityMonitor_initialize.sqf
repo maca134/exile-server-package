@@ -12,9 +12,10 @@ _enabled = getNumber(configFile >> "CfgSettings" >> "LocalityMonitor" >> "Monito
 if(_enabled isEqualTo 1)then
 {
 	[
-	120,
-	ExileServer_system_LocalityMonitor_thread_monitor,
-	[getNumber(configFile >> "CfgSettings" >> "LocalityMonitor" >> "treshold")],
-	true
-	] call ExileServer_system_thread_addTask;
+		120,
+		ExileServer_system_LocalityMonitor_thread_monitor,
+		[getNumber(configFile >> "CfgSettings" >> "LocalityMonitor" >> "threshold")],
+		true
+	] 
+	call ExileServer_system_thread_addTask;
 };

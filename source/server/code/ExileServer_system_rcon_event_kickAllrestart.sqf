@@ -10,7 +10,7 @@
 private["_i"];
 for "_i" from 0 to 99 do 
 {
-	format ["#kick %1",_i] call ExileServer_system_rcon_event_sendCommand;
+	format ["#kick %1", _i] call ExileServer_system_rcon_event_sendCommand;
 	uiSleep 0.2;
 };
 true

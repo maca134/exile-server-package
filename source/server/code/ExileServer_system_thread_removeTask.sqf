@@ -12,12 +12,10 @@ _threadID = _this select 0;
 _result = false;
 _threadIndex = [ExileSystemSpawnThread, _threadID] call ExileClient_util_find;
 if (_threadIndex != -1) then
-{
-		format ["Found ID %1 at: %2", _threadID, _threadIndex] call ExileServer_util_log;
+{	
 	ExileSystemThreadDelays deleteAt (ExileSystemThreadDelays find ((ExileSystemSpawnThread select _threadIndex) select 0));
 	[] call ExileServer_system_thread_threadAdjust;
 	ExileSystemSpawnThread deleteAt _threadIndex;
-		format ["Job with handle %1 removed.",_threadID] call ExileServer_util_log;
 	_result = true;
 };
 _result

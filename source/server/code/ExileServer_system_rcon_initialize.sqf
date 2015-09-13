@@ -7,12 +7,12 @@
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/.
  */
  
-private["_useAutoLock","_passwordCorrect","_test"];
+private["_useAutoLock","_passwordCorrect"];
 _useAutoLock = getNumber(configFile >> "CfgSettings" >> "RCON" >> "useAutoLock");
-if(_useAutoLock isEqualTo 1)then
+if (_useAutoLock isEqualTo 1) then
 {
 	_passwordCorrect = "#lock" call ExileServer_system_rcon_event_sendCommand;
-	if(_passwordCorrect)then
+	if (_passwordCorrect) then
 	{
 		"ServerPassword MATCH! server locked for init" call ExileServer_util_log;
 		ExileServerIsLocked = true;
@@ -26,5 +26,9 @@ if(_useAutoLock isEqualTo 1)then
 		ExilePasswordMatch = false;
 		ExileServerIsLocked = false;
 	};
+}
+else 
+{
+	ExilePasswordMatch = false;
+	ExileServerIsLocked = false;
 };
-_test

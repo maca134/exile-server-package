@@ -8,15 +8,15 @@
  */
  
 private["_playerObject"];
-if!(ExileSystemPlayerSaveASYNC isEqualTo [])then
+if !(ExileSystemPlayerSaveASYNC isEqualTo []) then
 {
 	{
 		_playerObject = _x;
-		if(!isNull _playerObject)then
+		if (!isNull _playerObject) then
 		{
 			_playerObject call ExileServer_object_player_database_update;
 		};
-		ExileSystemPlayerSaveASYNC deleteAt _forEachIndex;
 	} 
 	forEach ExileSystemPlayerSaveASYNC;
+	ExileSystemPlayerSaveASYNC = [];
 };

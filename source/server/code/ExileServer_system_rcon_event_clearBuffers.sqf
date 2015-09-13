@@ -8,11 +8,11 @@
  */
  
 private["_playerObject","_vehicleObject"];
-if!(ExileSystemPlayerSaveASYNC isEqualTo [])then
+if !(ExileSystemPlayerSaveASYNC isEqualTo []) then
 {
 	{
 		_playerObject = _x;
-		if(!isNull _playerObject)then
+		if (!isNull _playerObject) then
 		{
 			_playerObject call ExileServer_object_player_database_update;
 		};
@@ -20,19 +20,19 @@ if!(ExileSystemPlayerSaveASYNC isEqualTo [])then
 	} 
 	forEach ExileSystemPlayerSaveASYNC;
 };
-if!(ExileServerVehicleSaveQueue isEqualTo [])then
+if !(ExileServerVehicleSaveQueue isEqualTo []) then
 {
 	{
 		_vehicleObject = _x;
-		if(!isNull _vehicleObject)then
+		if (!isNull _vehicleObject) then
 		{
-			if(_vehicleObject getVariable ["ExileIsContainer",false])then
+			if (_vehicleObject getVariable ["ExileIsContainer", false]) then
 			{
 				_vehicleObject call ExileServer_object_container_database_update;
 			}
 			else
 			{
-				if(isNumber(configFile >> "CfgVehicles" >> typeOf _vehicleObject >> "ExileIsDoor"))then
+				if (isNumber(configFile >> "CfgVehicles" >> typeOf _vehicleObject >> "ExileIsDoor")) then
 				{
 					_vehicleObject call ExileServer_object_construction_database_lockUpdate;
 				}

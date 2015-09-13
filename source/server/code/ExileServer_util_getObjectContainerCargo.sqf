@@ -25,5 +25,4 @@ if !(_allContainers isEqualTo []) then
 	}
 	forEach _allContainers;
 };
-	format ["GetObjectContainerCargo - %1",_data] call ExileServer_util_log;
 _data

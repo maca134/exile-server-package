@@ -25,7 +25,7 @@ try
 		{
 			_flags = _flags select 0;
 			_range = _flags getVariable ["ExileTerritorySize",0];
-			if(_range < (_playerObject distance _flags))then
+			if(_range < (_playerObject distance2D _flags))then
 			{
 				throw "Build a territory first!"
 			};

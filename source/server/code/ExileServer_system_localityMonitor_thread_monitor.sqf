@@ -7,18 +7,18 @@
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/.
  */
  
-private["_array","_players","_count"];
+private["_array","_players","_playerCount"];
 _array = allMissionObjects "Exile_Construction_Abstract_Static";
 _players = allPlayers;
-_count = count _players;
-if(_count > (_this select 0))then
+_playerCount = count _players;
+if (_playerCount > (_this select 0)) then
 {
 	{
-		if(local _x)then
+		if (local _x) then
 		{
-			if(_forEachIndex > _count)then
+			if (_forEachIndex > _playerCount) then
 			{
-				_x setOwner (owner (_players select (round (_forEachIndex % _count))));
+				_x setOwner (owner (_players select (round (_forEachIndex % _playerCount))));
 			}
 			else
 			{

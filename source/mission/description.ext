@@ -74,6 +74,4 @@ enableDebugConsole = 0; // 2 = dangerous in MP
 // NO NO NO
 allowFunctionsRecompile = 0;
 
-class CfgRemoteExecCommands {};
-
 #include "config.cpp"

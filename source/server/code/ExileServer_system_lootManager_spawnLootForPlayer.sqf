@@ -7,11 +7,11 @@
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/.
  */
  
-private["_playerObject","_spawnRadius","_spawnChance","_notifyPlayer","_playerPosition","_lastKnownPlayerPosition","_radius","_flags","_buildings","_spawnedLootForThisPlayer","_building","_flag","_flagRadius","_buildingConfig","_lootTableName","_localPositions","_spawnedItemClassNames","_lootPosition","_itemClassName","_cargoType","_lootHolder","_magazineClassNames","_magazineClassName","_numberOfMagazines"];
+private["_playerObject","_spawnRadius","_spawnChance","_visualThreshold","_playerPosition","_lastKnownPlayerPosition","_buildings","_spawnedLoot","_building","_buildingType","_buildingConfig","_lootTableName","_localPositions","_spawnedItemClassNames","_lootGroundWeaponHolderNetIDs","_spawnedLootInThisBuilding","_lootPosition","_itemClassName","_cargoType","_lootHolder","_magazineClassNames","_magazineClassName","_numberOfMagazines"];
 _playerObject = _this;
-_spawnRadius = (getNumber(configFile >> "CfgSettings" >> "LootSettings" >> "spawnRadius") max 50) min 200; 
-_spawnChance = (getNumber(configFile >> "CfgSettings" >> "LootSettings" >> "spawnChance") max 0) min 99; 
-_notifyPlayer = getNumber(configFile >> "CfgSettings" >> "LootSettings" >> "notifyPlayer");
+_spawnRadius = getNumber (configFile >> "CfgSettings" >> "LootSettings" >> "spawnRadius");
+_spawnChance = (getNumber (configFile >> "CfgSettings" >> "LootSettings" >> "spawnChance") max 0) min 99; 
+_visualThreshold = getNumber (configFile >> "CfgSettings" >> "LootSettings" >>  "visualThreshold");
 try 
 {
 	if !(alive _playerObject) then 
@@ -24,59 +24,70 @@ try
 	};
 	_playerPosition = getPosATL _playerObject;
 	_lastKnownPlayerPosition = _playerObject getVariable["ExilePositionAtLastLootSpawnCircle", [0,0,0]]; 
-	if (_lastKnownPlayerPosition distance _playerPosition < 11) then
+	if (_lastKnownPlayerPosition distance2D _playerPosition < 11) then
 	{
 		throw false;
 	};
-	_radius = getArray(missionConfigFile >> "CfgTerritories" >> "prices");
-	_radius = (_radius select ((count _radius) -1)) select 1;
-	_flags = _playerPosition nearObjects ["Exile_Construction_Flag_Static", _radius * 2];
+	_playerObject setVariable["ExilePositionAtLastLootSpawnCircle", _playerPosition];	
+	if (_playerPosition call ExileClient_util_world_isTraderZoneNearby) then
+	{
+		throw false;
+	};
+	if (_playerPosition call ExileClient_util_world_isTerritoryNearby) then
+	{
+		throw false;
+	};
 	_buildings = _playerPosition nearObjects ["House", _spawnRadius];
-	_spawnedLootForThisPlayer = false;
+	_spawnedLoot = false;
 	{
 		_building = _x;
-		if!(_flags isEqualTo [])then
+		_buildingType = typeOf _building;
+		if (isClass(configFile >> "CfgBuildings" >> _buildingType)) then
 		{
+			if !(_building getVariable ["ExileHasLoot", false]) then
 			{
-				_flag = _x;
-				_flagRadius = _flag getVariable ["ExileTerritorySize",0];
-				if((_building distance _flag) < _flagRadius)then
+				if !([getPosATL _building, _visualThreshold] call ExileServer_util_position_isPlayerNearby) then
 				{
-					throw false;
-				}; 
-			} 
-			forEach _flags;
-		};
-		if (isClass(configFile >> "CfgBuildings" >> (typeOf _building))) then
-		{
-			if !([getPosATL _building, 10] call ExileServer_util_position_isPlayerNearby) then
-			{
-				if !(_building getVariable ["ExileHasLoot", false]) then
-				{
-					_buildingConfig = configFile >> "CfgBuildings" >> (typeOf _building);
+					_buildingConfig = configFile >> "CfgBuildings" >> _buildingType;
 					_lootTableName = getText(_buildingConfig >> "table");
 					_localPositions = getArray(_buildingConfig >> "positions");
 					_spawnedItemClassNames = [];
+					_lootGroundWeaponHolderNetIDs = [];
+					_spawnedLootInThisBuilding = false;
 					{					
 						if ((floor (random 100)) <= _spawnChance) then
 						{
-							_lootPosition = _building modelToWorld _x;
+							_lootPosition = ASLToATL (AGLToASL (_building modelToWorld _x));
 							if (_lootPosition select 2 < 0.05) then
 							{
-								_lootPosition set[2, 0.05];
+								_lootPosition set [2, 0.05];
 							};
 							_itemClassName = _lootTableName call ExileServer_system_lootManager_dropItem;
 							if !(_itemClassName in _spawnedItemClassNames) then
 							{
 								_cargoType = _itemClassName call ExileClient_util_cargo_getType;
-								_lootHolder = createVehicle ["GroundWeaponHolder",_lootPosition,[],0,"CAN_COLLIDE"];
+								_lootHolder = createVehicle ["GroundWeaponHolder", _lootPosition, [], 0, "CAN_COLLIDE"];
 								_lootHolder setDir (random 360);
 								_lootHolder setPosATL _lootPosition;
 								_lootHolder setVariable ["ExileSpawnedAt", time];
+								_lootHolder setVariable ["ExileIsLoot", true]; 
 								switch (_cargoType) do
 								{
-									case 1: 	{ _lootHolder addMagazineCargoGlobal [_itemClassName, 1]; };
-									case 3: 	{ _lootHolder addBackpackCargoGlobal [_itemClassName, 1]; };
+									case 1: 	
+									{ 
+										if (_itemClassName isEqualTo "Exile_Item_MountainDupe") then
+										{
+											_lootHolder addMagazineCargoGlobal [_itemClassName, 2]; 
+										}
+										else 
+										{
+											_lootHolder addMagazineCargoGlobal [_itemClassName, 1]; 
+										};
+									};
+									case 3: 	
+									{ 
+										_lootHolder addBackpackCargoGlobal [_itemClassName, 1]; 
+									};
 									case 2: 	
 									{ 
 										_lootHolder addWeaponCargoGlobal [_itemClassName, 1]; 
@@ -93,32 +104,29 @@ try
 									};
 									default { _lootHolder addItemCargoGlobal [_itemClassName,1]; };
 								};
-								ExileServerOwnershipSwapQueue pushBack [_lootHolder,_playerObject];
+								ExileServerOwnershipSwapQueue pushBack [_lootHolder, _playerObject];
 								_spawnedItemClassNames pushBack _itemClassName;
-								_spawnedLootForThisPlayer = true;
+								_lootGroundWeaponHolderNetIDs pushBack (netId _lootHolder);
+								_spawnedLoot = true;
+								_spawnedLootInThisBuilding = true;
 							};
 						};
 					}
 					forEach _localPositions;
-					ExileServerBuildingNetIdsWithLoot pushBack (netId _building);
-					_building setVariable ["ExileLootSpawnedAt", time];
-					_building setVariable ["ExileHasLoot", true];
+					if (_spawnedLootInThisBuilding) then
+					{
+						ExileServerBuildingNetIdsWithLoot pushBack (netId _building);
+						_building setVariable ["ExileLootSpawnedAt", time];
+						_building setVariable ["ExileHasLoot", true];
+						_building setVariable ["ExileLootGroundWeaponHolderNetIDs", _lootGroundWeaponHolderNetIDs];
+					};
 				};
 			};
 		};
 	}
 	forEach _buildings;
-	if (_notifyPlayer == 1) then
-	{
-		if (_spawnedLootForThisPlayer) then
-		{
-			[_playerObject, "notificationRequest",["Success",["Loot spawned for you!"]]] call ExileServer_system_network_send_to;
-		};
-	};
-	_playerObject setVariable["ExilePositionAtLastLootSpawnCircle", _playerPosition];	
-	_playerObject setVariable["ExileLastLootSpawnTime", time];
 }
 catch 
 {
 };
-true
+_spawnedLoot

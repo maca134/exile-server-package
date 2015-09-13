@@ -13,5 +13,4 @@ if (ExileSystemThreadDelays isEqualTo []) then
 };
 ExileSystemThreadDelays = ExileSystemThreadDelays call BIS_fnc_sortNum;
 ExileSystemThreadSleep = (((ExileSystemThreadDelays select 0) max 0.01) min 5);
-	format ["Main thread Delay adjusted to %1 seconds ",ExileSystemThreadSleep] call ExileServer_util_log;
 true

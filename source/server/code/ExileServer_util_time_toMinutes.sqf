@@ -11,13 +11,13 @@ private["_time","_timeMinutes"];
 _time = _this;
 _timeMinutes = 0;
 {
-	switch(_forEachIndex)do
+	switch (_forEachIndex) do
 	{
 		case 0 : { _timeMinutes = _timeMinutes + (_x * 525600);};
 		case 1 : { _timeMinutes = _timeMinutes + (_x * 43829);};
 		case 2 : { _timeMinutes = _timeMinutes + (_x * 1440);};
-		case 3 : { _timeMinutes = _timeMinutes + (_x * 60 );};
-		default { _timeMinutes = _timeMinutes + _x;};
+		case 3 : { _timeMinutes = _timeMinutes + (_x * 60);};
+		default  { _timeMinutes = _timeMinutes + _x;};
 	};
 } 
 forEach _time;

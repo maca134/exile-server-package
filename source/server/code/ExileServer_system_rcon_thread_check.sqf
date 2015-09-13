@@ -15,15 +15,15 @@ _kickTime = _this select 3;
 _lockTime = _this select 4;
 _uptime = call ExileServer_util_time_uptime;
 _timeTilRestart = _restartTime - _uptime;
-if(typeName _restartMessages isEqualTo "ARRAY")then
+if (typeName _restartMessages isEqualTo "ARRAY") then
 {
-	if!(_restartMessages isEqualTo [])then
+	if !(_restartMessages isEqualTo []) then
 	{
 		{
 			_time = _x;
-			if(_timeTilRestart < _time)then
+			if (_timeTilRestart < _time) then
 			{
-				if!(ExileSessions isEqualTo [])then
+				if !(ExileSessions isEqualTo []) then
 				{
 					["notificationRequest",["RestartWarning",[format["Server restart in %1 min!",_time]]]] call ExileServer_system_network_send_broadcast;
 				};
@@ -34,18 +34,18 @@ if(typeName _restartMessages isEqualTo "ARRAY")then
 		forEach _restartMessages;
 	};
 };
-if(_timeTilRestart < _lockTime)then
+if (_timeTilRestart < _lockTime) then
 {
-	if!(ExileServerIsLocked)then
+	if !(ExileServerIsLocked) then
 	{
 		"#lock" call ExileServer_system_rcon_event_sendCommand;
 		"Server locked for restart" call ExileServer_util_log;
 		["notificationRequest",["LockKickWarning",["You will be kicked from the server due to restart."]]] call ExileServer_system_network_send_broadcast;
 		ExileServerIsLocked = true;
 	};
-	if(_timeTilRestart < _kickTime)then
+	if (_timeTilRestart < _kickTime) then
 	{
-		if!(ExileServerRestartMode)then
+		if !(ExileServerRestartMode) then
 		{
 			call ExileServer_system_rcon_event_kickAllrestart;
 			"Evryone kicked for restart" call ExileServer_util_log;

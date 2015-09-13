@@ -7,7 +7,7 @@
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/.
  */
  
-if(ExileServerIsLocked)then
+if (ExileServerIsLocked) then
 {
 	call ExileServer_system_rcon_setupEvents;
 	"Rcon events initialized!" call ExileServer_util_log;

@@ -7,7 +7,7 @@
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/.
  */
  
-private["_recipient","_messageName","_messageParameters","_player"];
+private["_recipient","_messageName","_messageParameters","_player","_publicMessage"];
 _recipient = _this select 0;
 _messageName = _this select 1;
 _messageParameters = _this select 2;
@@ -19,13 +19,13 @@ else
 {
 	_player = _recipient;
 };
-PublicMessage = [_messageName, _messageParameters];
+_publicMessage = [_messageName, _messageParameters];
 if(typeName _player isEqualTo "SCALAR")then
 {
-	_player publicVariableClient "PublicMessage";
+	_publicMessage remoteExecCall ["ExileClient_system_network_dispatchIncomingMessage",_player];
 }
 else
 {
-	(owner _player) publicVariableClient "PublicMessage";
+	_publicMessage remoteExecCall ["ExileClient_system_network_dispatchIncomingMessage",owner _player];
 };
-PublicMessage = nil;
+_publicMessage = nil;

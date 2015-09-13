@@ -8,6 +8,6 @@
  */
  
 ExileServerBuildingNetIdsWithLoot = [];
-[5 * 60, ExileServer_system_lootManager_thread_unlockLootBuildings, [], true] call ExileServer_system_thread_addTask;
+[5 * 60, ExileServer_system_lootManager_thread_despawnLoot, [], true] call ExileServer_system_thread_addTask;
 [30, ExileServer_system_lootManager_thread_spawnLoot, [], true] call ExileServer_system_thread_addTask;
 true

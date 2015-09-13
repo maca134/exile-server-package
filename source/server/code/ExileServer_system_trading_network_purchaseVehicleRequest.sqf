@@ -89,7 +89,7 @@ try
 		_vehicleObject = [_vehicleClass, [0,0,1000], (random 360), true, _pinCode] call ExileServer_object_vehicle_createPersistentVehicle;
 		_position2d set [2,0];
 		_offset = _vehicleObject call ExileClient_util_model_getHeight;
-		_position2d set [2,_offset / 3];
+		_position2d set [2,_offset / 4];
 		_vehicleObject setPosATL _position2d;
 	};	
 	_vehicleObject setVariable ["ExileOwnerUID", (getPlayerUID _playerObject)];

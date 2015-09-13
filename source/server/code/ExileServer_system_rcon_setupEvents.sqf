@@ -12,6 +12,7 @@ _restartTime = getArray (configFile >> "CfgSettings" >> "RCON" >> "restartTimer"
 ExileServerRestartTime = ((_restartTime select 0) * 60) + (_restartTime select 1);
 ExileServerKickTime = getNumber (configFile >> "CfgSettings" >> "RCON" >> "kickTime");
 ExileServerLockTime = getNumber (configFile >> "CfgSettings" >> "RCON" >> "restartAutoLock");
+ExileServerUseAutokick = getNumber (configFile >> "CfgSettings" >> "RCON" >> "useAutoKick");
 _useRestartMessages = getNumber (configFile >> "CfgSettings" >> "RCON" >> "useRestartMessages");
 if(_useRestartMessages isEqualTo 1)then
 {
@@ -21,9 +22,9 @@ else
 {
 	ExileServerRestartMessages = false;
 };
-ExileServerUseAutokick = getNumber (configFile >> "CfgSettings" >> "RCON" >> "useAutoKick");
-[30,
-ExileServer_system_rcon_thread_check,
+[
+	30,
+	ExileServer_system_rcon_thread_check,
 	[
 		ExileServerRestartTime,
 		ExileServerRestartMessages,
@@ -32,5 +33,6 @@ ExileServer_system_rcon_thread_check,
 		ExileServerLockTime
 	],
 	true
-] call ExileServer_system_thread_addTask;
+] 
+call ExileServer_system_thread_addTask;
 true

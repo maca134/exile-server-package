@@ -12,12 +12,9 @@ _position = _this select 0;
 _radius = _this select 1;
 _result = false;
 {
-	if (alive _x) then
+	if ((alive _x) && {(_x distance2D _position) <= _radius}) exitWith
 	{
-		if (_x distance _position <= _radius) exitWith
-		{
-			_result = true;
-		};
+		_result = true;
 	};
 }
 forEach allPlayers;
