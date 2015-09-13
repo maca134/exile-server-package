@@ -23,6 +23,8 @@ set MYSQLUSER=root
 set MYSQLPASS=changeme
 set MYSQLDB=exile
 
+rem YOU DO NOT NEED TO EDIT BELOW HERE!
+
 set ARMASERVEREXE=arma3server%INSTANCEID%
 set ARMASERVERORIGEXE=arma3server.exe
 set MISSIONNAME=mission.%MAP%
