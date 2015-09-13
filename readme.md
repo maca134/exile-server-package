@@ -4,6 +4,7 @@ A collection of batch file to make deploying an Exile server.
 You need SteamCMD, you can get it from here: 
 [Download](https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip)
 [Info](https://developer.valvesoftware.com/wiki/SteamCMD)
+And MySQL server from [here](https://dev.mysql.com/downloads/installer/)
 
 ## Install
 1. Download the latest release of this repo [here](https://github.com/maca134/exile-server-package/releases) & Exile client mod [here](http://www.exilemod.com/)
