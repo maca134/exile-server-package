@@ -1,0 +1,284 @@
+/*%FSM<COMPILE "C:\Program Files (x86)\Bohemia Interactive\Tools\FSM Editor Personal Edition\scriptedFSM.cfg, main.fsm">*/
+/*%FSM<HEAD>*/
+/*
+item0[] = {"Start",0,250,775.000000,-50.000000,875.000000,0.000000,0.000000,"Start"};
+item1[] = {"Continue",8,218,775.000000,25.000000,875.000000,75.000000,0.000000,"Continue"};
+item2[] = {"Wait",2,250,775.000000,100.000000,875.000000,150.000000,0.000000,"Wait"};
+item3[] = {"Every_30s",4,218,550.000000,175.000000,650.000000,225.000000,0.000000,"Every" \n "30s"};
+item4[] = {"Group_Garbage_Co",2,250,550.000000,250.000000,650.000000,300.000000,0.000000,"Group" \n "Garbage" \n "Collector"};
+item5[] = {"",7,210,596.000000,321.000000,604.000000,329.000000,0.000000,""};
+item6[] = {"Every_1m",4,218,700.000000,175.000000,800.000000,225.000000,1.000000,"Every" \n "1m"};
+item7[] = {"Loot_Garbage_Col",2,4346,700.000000,250.000000,800.000000,300.000000,0.000000,"Loot" \n "Garbage" \n "Collector"};
+item8[] = {"",7,210,521.000000,321.000000,529.000000,329.000000,0.000000,""};
+item9[] = {"",7,210,521.000000,46.000000,529.000000,54.000000,0.000000,""};
+item10[] = {"",7,210,746.000000,321.000000,754.000000,329.000000,0.000000,""};
+item11[] = {"Every_5m",4,218,850.000000,175.000000,950.000000,225.000000,2.000000,"Every" \n "5m"};
+item12[] = {"Corpse_Wreck_Garbage",2,250,850.000000,250.000000,950.000000,300.000000,0.000000,"Corpse/Wreck" \n "Garbage" \n "Collector"};
+item13[] = {"",7,210,896.000000,321.000000,904.000000,329.000000,0.000000,""};
+link0[] = {0,1};
+link1[] = {1,2};
+link2[] = {2,3};
+link3[] = {2,6};
+link4[] = {2,11};
+link5[] = {3,4};
+link6[] = {4,5};
+link7[] = {5,8};
+link8[] = {6,7};
+link9[] = {7,10};
+link10[] = {8,9};
+link11[] = {9,1};
+link12[] = {10,5};
+link13[] = {11,12};
+link14[] = {12,13};
+link15[] = {13,10};
+globals[] = {25.000000,1,0,0,0,640,480,1,447,6316128,1,318.336456,1188.838989,628.367249,-216.700607,1061,910,1};
+window[] = {2,-1,-1,-1,-1,890,156,1450,156,3,1079};
+*//*%FSM</HEAD>*/
+class FSM
+{
+  fsmName = "main.fsm";
+  class States
+  {
+    /*%FSM<STATE "Start">*/
+    class Start
+    {
+      name = "Start";
+      init = /*%FSM<STATEINIT""">*/"_lastTime30 = time;" \n
+       "_lastTime60 = time;" \n
+       "_lastTime300 = time;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Continue">*/
+        class Continue
+        {
+          priority = 0.000000;
+          to="Wait";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"true"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Wait">*/
+    class Wait
+    {
+      name = "Wait";
+      init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Every_5m">*/
+        class Every_5m
+        {
+          priority = 2.000000;
+          to="Corpse_Wreck_Garbage";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"(diag_ticktime - _lastTime300) > 300"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/"_lastTime300 = diag_ticktime;"/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Every_1m">*/
+        class Every_1m
+        {
+          priority = 1.000000;
+          to="Loot_Garbage_Col";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"(diag_ticktime - _lastTime60) > 60"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/"_lastTime60 = diag_ticktime;"/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Every_30s">*/
+        class Every_30s
+        {
+          priority = 0.000000;
+          to="Group_Garbage_Co";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"(diag_ticktime - _lastTime30) > 30"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/"_lastTime30 = diag_ticktime;"/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Group_Garbage_Co">*/
+    class Group_Garbage_Co
+    {
+      name = "Group_Garbage_Co";
+      init = /*%FSM<STATEINIT""">*/"/*" \n
+       "	Throw away empty groups" \n
+       "*/" \n
+       "" \n
+       "_groupsToDelete = [];" \n
+       "" \n
+       "{" \n
+       "	// Do not delete our graveyard group" \n
+       "	if !(_x isEqualTo ExileGraveyardGroup) then" \n
+       "	{" \n
+       "		_units = units _x;" \n
+       "" \n
+       "		// Only delete empty groups" \n
+       "		if (count _units isEqualTo 0) then" \n
+       "		{" \n
+       "			_groupsToDelete pushBack _x;" \n
+       "		};" \n
+       "	};" \n
+       "}" \n
+       "forEach allGroups;" \n
+       "" \n
+       "// Delete them now " \n
+       "{" \n
+       "	if (local _x) then" \n
+       "	{" \n
+       "		// The group belongs to the server" \n
+       "		deleteGroup _x;" \n
+       "	}" \n
+       "	else" \n
+       "	{" \n
+       "		// Ask the group owner to throw away the group" \n
+       "		[groupOwner _x, ""DeleteGroupPlz"", [_x]] call ExileServer_system_network_send_to;" \n
+       "	};" \n
+       "}" \n
+       "forEach _groupsToDelete;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Continue">*/
+        class Continue
+        {
+          priority = 0.000000;
+          to="Wait";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"true"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Loot_Garbage_Col">*/
+    class Loot_Garbage_Col
+    {
+      name = "Loot_Garbage_Col";
+      init = /*%FSM<STATEINIT""">*/"/*" \n
+       "	Throw away dropped items and loot not picked up" \n
+       "*/" \n
+       "" \n
+       "_objectsToDelete = [];" \n
+       "" \n
+       "{" \n
+       "	{" \n
+       "		_spawnedAt = _x getVariable [""ExileSpawnedAt"", -1];" \n
+       "" \n
+       "		// If this item was dropped, set it manually" \n
+       "		if (_spawnedAt isEqualTo -1) then " \n
+       "		{" \n
+       "			_spawnedAt = time;" \n
+       "			_x setVariable [""ExileSpawnedAt"", _spawnedAt];" \n
+       "		};" \n
+       "" \n
+       "		// Force despawn after 15 minutes" \n
+       "		if (time - _spawnedAt > 15 * 60) then " \n
+       "		{" \n
+       "			_objectsToDelete pushBack _x;" \n
+       "		}" \n
+       "		else " \n
+       "		{" \n
+       "			// Do not despawn loot/items when players are nearby" \n
+       "			// Config Radius! :)" \n
+       "			// Hardcoded to 80 now" \n
+       "			// getNumber(configFile >> ""CfgSettings"" >> ""LootSettings"" >>  ""despawnRadius"")" \n
+       "			if !([getPosATL _x, 80] call ExileServer_util_position_isPlayerNearby) then" \n
+       "			{" \n
+       "				_objectsToDelete pushBack _x;" \n
+       "			};" \n
+       "		};" \n
+       "	} " \n
+       "	forEach (allMissionObjects _x);" \n
+       "}" \n
+       "forEach [""WeaponHolderSimulated"", ""GroundWeaponHolder""];" \n
+       "" \n
+       "// Delete them here. It is soo unlogical, that you can delete the current iterator in Arma, so lets be safe" \n
+       "{" \n
+       "	deleteVehicle _x;" \n
+       "}" \n
+       "forEach _objectsToDelete;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Continue">*/
+        class Continue
+        {
+          priority = 0.000000;
+          to="Wait";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"true"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "Corpse_Wreck_Garbage">*/
+    class Corpse_Wreck_Garbage
+    {
+      name = "Corpse_Wreck_Garbage";
+      init = /*%FSM<STATEINIT""">*/"/*" \n
+       "	Delete vehicles and/or dead men" \n
+       "*/" \n
+       "" \n
+       "_despawnAfterMinutes = 60 * getNumber (configFile >> ""CfgSettings"" >> ""GarbageCollector"" >> ""despawnAfterMinutes"");" \n
+       "_objectsToRemove = [];" \n
+       "" \n
+       "{" \n
+       "	_diedAt = _x getVariable [""ExileDiedAt"", -1];" \n
+       "" \n
+       "	// If for an unknown reason Arma decided to skip the onMpKilled event" \n
+       "	// or if some scripters added more AI and forgot to add the good events," \n
+       "	// let the system think the unit died right now (so +/- 5mins)" \n
+       "	if (_diedAt isEqualTo -1) then " \n
+       "	{" \n
+       "		_diedAt = time;" \n
+       "" \n
+       "		_x setVariable [""ExileDiedAt"", _diedAt];" \n
+       "	};" \n
+       "" \n
+       "	// Time up? If so, throw that away" \n
+       "	// TODO: Maybe test if player is nearby? Must be a very large radius, so mmh... no" \n
+       "	if (time - _diedAt >= _despawnAfterMinutes) then" \n
+       "	{" \n
+       "		_objectsToRemove pushBack _x;" \n
+       "	};" \n
+       "}" \n
+       "forEach allDead;" \n
+       "" \n
+       "// Bye, bye!" \n
+       "{" \n
+       "	deleteVehicle _x;" \n
+       "}" \n
+       "forEach _objectsToRemove;"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Continue">*/
+        class Continue
+        {
+          priority = 0.000000;
+          to="Wait";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"true"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+  };
+  initState="Start";
+  finalStates[] =
+  {
+  };
+};
+/*%FSM</COMPILE>*/
