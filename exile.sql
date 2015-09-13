@@ -10,11 +10,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Dumping database structure for exile
-CREATE DATABASE IF NOT EXISTS `exile` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `exile`;
-
-
 -- Dumping structure for table exile.account
 CREATE TABLE IF NOT EXISTS `account` (
   `uid` varchar(32) NOT NULL,
