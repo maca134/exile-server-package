@@ -8,7 +8,7 @@ You need SteamCMD, you can get it from here:
 ## Install
 1. Download the files & Exile client mod
 2. Create a database and execute the sql
-3. TURN OF SQL STRICT MODE
+3. TURN OF SQL STRICT MODE [Info](https://dev.mysql.com/doc/refman/5.1/en/sql-mode.html#sql-mode-strict)
 4. Edit config.bat to your needs
 5. Run download_arma.bat to download ARMA 3 from Steam
 6. Run start.bat and your server should run
