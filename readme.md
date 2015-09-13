@@ -8,7 +8,7 @@ You need SteamCMD, you can get it from here:
 ## Install
 1. Download the latest release of this repo [here](https://github.com/maca134/exile-server-package/releases) & Exile client mod [here](http://www.exilemod.com/)
 2. Extract the folder to the location were you want the server.
-3. Create a database and execute the sql
+3. Create a database and execute the exile.sql
 4. TURN OF SQL STRICT MODE [Info](https://dev.mysql.com/doc/refman/5.1/en/sql-mode.html#sql-mode-strict)
 5. Edit config.bat to your needs
 6. Run download_arma.bat to download ARMA 3 from Steam
