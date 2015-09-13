@@ -14,6 +14,12 @@ You need SteamCMD, you can get it from here:
 6. Run download_arma.bat to download ARMA 3 from Steam
 7. Run start.bat and your server should run
 
+## Batch Files
+- config.bat - Contains the servers settings
+- download_arma.bat - Download ARMA 3 via SteamCMD
+- prestart.bat - Sets up the servers configs etc (use this in firedeamon)
+- start.bat - Runs the prestart.bat and starts the server exe
+
 ## Folders
 - config: This contains all the various config files needed. Battleye filters live in here.
 - dump: Used to copy src files and run find/replace
