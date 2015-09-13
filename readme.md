@@ -1,7 +1,9 @@
 # Exile Server Package - [Download](https://github.com/maca134/exile-server-package/releases)
 A collection of batch file to make deploying an Exile server.
 
-You need SteamCMD, you can get it from here: [Download](https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip) [Info](https://developer.valvesoftware.com/wiki/SteamCMD)
+You need SteamCMD, you can get it from here: 
+[Download](https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip)
+[Info](https://developer.valvesoftware.com/wiki/SteamCMD)
 
 ## Install
 1. Download the files & Exile client mod
