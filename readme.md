@@ -1,4 +1,4 @@
-# Exile Server Package
+# Exile Server Package - [Download](https://github.com/maca134/exile-server-package/releases)
 A collection of batch file to make deploying an Exile server.
 
 ## Install
