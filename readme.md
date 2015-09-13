@@ -6,7 +6,7 @@ You need SteamCMD, you can get it from here:
 [Info](https://developer.valvesoftware.com/wiki/SteamCMD)
 
 ## Install
-1. Download the latest release of this repo [here](https://github.com/maca134/exile-server-package/releases) & Exile client mod
+1. Download the latest release of this repo [here](https://github.com/maca134/exile-server-package/releases) & Exile client mod [here](http://www.exilemod.com/)
 2. Create a database and execute the sql
 3. TURN OF SQL STRICT MODE [Info](https://dev.mysql.com/doc/refman/5.1/en/sql-mode.html#sql-mode-strict)
 4. Edit config.bat to your needs
