@@ -7,6 +7,8 @@ set STEAMPASSWORD=password
 
 set MAP=Altis
 set INSTANCEID=A3ExileTest
+
+rem Server name needs to be escaped! http://www.robvanderwoude.com/escapechars.php
 set SERVERNAME=A3ExileTest
 set IP=127.0.0.1
 set PORT=2302
