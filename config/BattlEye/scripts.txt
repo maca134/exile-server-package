@@ -17,7 +17,7 @@
 7 setUnitRecoilCoefficient
 7 setWeaponReloadingTime
 7 addAction !="ExileClientInteractionHandles pushBack (_object addAction"
-7 remoteexec
+7 remoteexec !="ssionId, _messageName, _messageParameters];\n_publicMessage remoteExecCall ["ExileServer_system_network_dispatchIncomingMessage\","
 7 drawline3d
 7 onEachFrame !="onEachFrame {};"
 7 removeAllItems
